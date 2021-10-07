@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: backend
+  name: backend-ingress
+spec:
+  rules:
+    - host: durian-k8s.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/api"
+            backend:
+              service:
+                name: durian-service
+                port:
+                  number: 8000

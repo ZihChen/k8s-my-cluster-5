@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: frontend
+  name: nginx-build-app
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx-build
+    spec:
+      containers:
+        - name: nginx-build-app
+          image: owl8105/build_nginx
+          ports:
+            - name: app-port
+              containerPort: 80
+  selector:
+    matchLabels:
+      app: nginx-build
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: frontend
+  name: bar-app
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: bar
+    spec:
+      containers:
+        - name: bar-app
+          image: hashicorp/http-echo:0.2.3
+          args:
+            - "-text=bar"
+  selector:
+    matchLabels:
+      app: bar

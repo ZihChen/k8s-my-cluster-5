@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: backend
+  name: durian-app
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: durian
+    spec:
+      containers:
+        - name: durian-app
+          image: owl8105/durian:1.0.0
+          ports:
+            - name: app-port
+              containerPort: 8080
+          env:
+            - name: "ENV"
+              value: "local"
+  selector:
+    matchLabels:
+      app: durian
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: backend
+  name: mysql-app
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql-app
+          image: mysql:5.7
+          ports:
+            - name: mysql-port
+              containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_DATABASE
+              value: goformat
+  selector:
+    matchLabels:
+      app: mysql
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: backend
+  name: redis-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis-app
+          image: owl8105/rd3-redis
+          ports:
+            - name: redis-port
+              containerPort: 6379
+          volumeMounts:
+            - mountPath: /data
+              name: durian-pvc
+      volumes:
+        - name: durian-pvc
+          persistentVolumeClaim:
+            claimName: my-pvc
+  selector:
+    matchLabels:
+      app: redis

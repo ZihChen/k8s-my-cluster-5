@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: backend
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  namespace: backend
+#  name: "durian-redis"
+#spec:
+#  accessModes:
+#  - ReadWriteMany
+#  resources:
+#    requests:
+#      storage: 2Gi
+#  storageClassName: local-storage

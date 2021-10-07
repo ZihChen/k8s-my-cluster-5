@@ -1,0 +1,38 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: backend
+  name: durian-service
+spec:
+  selector:
+    app: durian
+  ports:
+    - port: 8000
+      targetPort: 8080
+      protocol: TCP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: backend
+  name: mysql-service
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+      protocol: TCP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: backend
+  name: redis-service
+spec:
+  selector:
+    app: redis
+  ports:
+    - port: 6379
+      targetPort: 6379
+      protocol: TCP

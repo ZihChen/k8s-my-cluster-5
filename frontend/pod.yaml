@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: frontend
+  name: bar-app
+  labels:
+    app: nginx-build
+spec:
+  containers:
+    - name: bar-app
+      image: golang:1.16.7-alpine
+      ports:
+        - name: alpine-port
+          containerPort: 8081
